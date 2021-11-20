@@ -1,10 +1,28 @@
+import React from "react";
+import {BrowserRouter as Router, Routes , Route} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import './App.css';
+import Home from "./components/Home"
+import Login from "./components/Login";
+import Register from "./components/Register"
 
 function App() {
-  return (
-    <div className="App">
-    </div>
-  );
+    return (
+        <Router>
+            <div className="navBar">
+                <ul>
+                    <li><NavLink exact to="/home">Home</NavLink></li>
+                    <li><NavLink exact to="/login">Login</NavLink></li>
+                    <li><NavLink exact to="/register">Register</NavLink></li>
+                </ul>
+            <Routes>
+                <Route exact path="/home" element={<Home/>}></Route>
+                <Route exact path="/login" element={<Login/>}></Route>
+                <Route exact path="/register" element={<Register/>}></Route>
+            </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
