@@ -15,6 +15,7 @@ import './App.css';
 import Home from "./components/Home"
 import Login from "./components/Login";
 import Register from "./components/Register"
+import Dashboard from "./components/Dashboard";
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                         <Route exact path="/home" element={<Home/>}></Route>
                         <Route exact path="/login" element={<Login/>}></Route>
                         <Route exact path="/register" element={<Register/>}></Route>
+                        <Route exact path="/dashboard" element={<Dashboard/>}></Route>
                     </Routes>
                 </div>
             </Router>

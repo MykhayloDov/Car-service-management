@@ -15,7 +15,7 @@ export function Login() {
             return;
         }
         if (user) {
-            return navigate("/home")
+            return navigate("/dashboard")
         }
     }, [user, loading]);
     return (
