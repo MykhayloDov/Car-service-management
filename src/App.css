@@ -1,3 +1,7 @@
+.navBar {
+    width: 100%;
+}
+
 .navBar ul {
     padding: 0;
     margin: 0;
@@ -5,7 +9,7 @@
     list-style: none;
     width: 100%;
     background-color: #333;
-    border: 5px solid #333333;
+    border-top: 7px solid #333333;
 }
 
 .navBar ul a:hover {
@@ -23,4 +27,14 @@
 .navBar ul .active, navBar ul a:hover {
     background: #FFF;
     color: #222;
+}
+
+.welcomeTitle {
+    width: 70%;
+    margin: auto;
+    color: #222222;
+}
+
+.welcomeNotes {
+    color: #050e2a;
 }
