@@ -17,9 +17,11 @@ import Login from "./components/Login";
 import Register from "./components/Register"
 import Dashboard from "./components/Dashboard";
 
+
+
 function App() {
     return (
-        <div>
+        <div className="root_container">
             <Router>
                 <div className="navBar">
                     <ul>
@@ -35,14 +37,9 @@ function App() {
                     </Routes>
                 </div>
             </Router>
-            {/*<div className="welcomeTitle">*/}
-            {/*    <br/>*/}
-            {/*    <br/>*/}
-            {/*    <br/>*/}
-            {/*    <h1>Welcome to the free car management webpage!</h1>*/}
-            {/*    <br/>*/}
-            {/*    <p className="welcomeNotes">This add will help you to perform an easy and lite registry of the car*/}
-            {/*        maintenance operations, as well spare parts replacement. </p>*/}
+            {/*<div className="login_section">*/}
+            {/*    <span>Logged in as:</span>*/}
+            {/*    {getUserEmail}*/}
             {/*</div>*/}
         </div>
     );
