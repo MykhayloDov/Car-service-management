@@ -28,6 +28,7 @@ function App() {
                         <li><NavLink exact to="/home">Home</NavLink></li>
                         <li><NavLink exact to="/login">Login</NavLink></li>
                         <li><NavLink exact to="/register">Register</NavLink></li>
+                        <li className="dashboardLink"><NavLink exact to="dashboard">Dashboard</NavLink></li>
                     </ul>
                     <Routes>
                         <Route exact path="/home" element={<Home/>}></Route>
@@ -37,10 +38,6 @@ function App() {
                     </Routes>
                 </div>
             </Router>
-            {/*<div className="login_section">*/}
-            {/*    <span>Logged in as:</span>*/}
-            {/*    {getUserEmail}*/}
-            {/*</div>*/}
         </div>
     );
 }
