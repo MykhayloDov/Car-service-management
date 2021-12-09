@@ -10,24 +10,26 @@ import {
     Outlete
 } from "react-router-dom";
 import {NavLink} from "react-router-dom";
-import { fakeAuthProvider } from "./auth"
+import {fakeAuthProvider} from "./auth"
 import './App.css';
 import Home from "./components/Home"
-import Login from "./components/Login";
+import Login, {disableLinks} from "./components/Login";
 import Register from "./components/Register"
 import Dashboard from "./components/Dashboard";
 
 
-
 function App() {
+    let showLinks = "showLinks";
+    console.log(disableLinks)
+
     return (
         <div className="root_container">
             <Router>
                 <div className="navBar">
                     <ul>
                         <li><NavLink exact to="/home">Home</NavLink></li>
-                        <li><NavLink exact to="/login">Login</NavLink></li>
-                        <li><NavLink exact to="/register">Register</NavLink></li>
+                        <li className={showLinks}><NavLink exact to="/login">Login</NavLink></li>
+                        <li className={showLinks}><NavLink exact to="/register">Register</NavLink></li>
                         <li className="dashboardLink"><NavLink exact to="dashboard">Dashboard</NavLink></li>
                     </ul>
                     <Routes>
@@ -40,6 +42,9 @@ function App() {
             </Router>
         </div>
     );
+
+    console.log(disableLinks)
+
 }
 
 export default App;

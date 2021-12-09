@@ -4,12 +4,15 @@ import {auth, signInWithEmailAndPassword, signInWithGoogle} from "../firebase";
 import {useAuthState} from "react-firebase-hooks/auth";
 import "./login.css"
 
+let disableLinks = function () {};
 
-export function Login() {
+ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
+    let linksDisplay = "showLinks";
+
     useEffect(() => {
         if (loading) {
             return;
@@ -18,6 +21,13 @@ export function Login() {
             return navigate("/dashboard")
         }
     }, [user, loading]);
+
+    disableLinks = () => {
+        if (user) {
+            return linksDisplay = !linksDisplay;
+        }
+    }
+
     return (
         <div className="login">
             <div className="login_container">
@@ -51,11 +61,12 @@ export function Login() {
                     <Link to="/reset">Forgot Password</Link>
                 </div>
                 <div>
-                    Don't have an account? <Link to="/register">Register</Link>Now
+                    Don't have an account? <Link to="/register">&nbsp;Register</Link>&nbsp;&nbsp;Now
                 </div>
             </div>
         </div>
     )
+     console.log(disableLinks())
 }
 
-export default Login
+export  {Login, disableLinks}

@@ -19,7 +19,7 @@ export default function Dashboard() {
             setName(data.name);
         } catch (err) {
             console.log(err);
-            // alert("An error ocurred while fetching user data");
+            // alert("An error occurred while fetching user data");
         }
     };
     useEffect(() => {

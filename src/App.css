@@ -39,6 +39,15 @@
     color: #222;
 }
 
+.showLinks {
+    visibility: visible;
+}
+
+.hiddenLinks {
+    display: none;
+}
+
+
 .dashboardLink {
     visibility: hidden;
 }
