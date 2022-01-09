@@ -1,4 +1,7 @@
-import * as firebase from "firebase/compat";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import {getFirestore, collection, query, where, getDocs} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,9 +21,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = firebase.default.initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+
+const firebaseApp = initializeApp(firebaseConfig);
+
 const auth = app.auth();
-const db = app.firestore();
+//const auth = getAuth(firebaseApp);
+// const db = app.firestore();
+const db = getFirestore(firebaseApp);
 const googleProvider = new firebase.default.auth.GoogleAuthProvider();
 
 export default app;
