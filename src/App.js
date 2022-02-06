@@ -1,50 +1,42 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Link,
-    useNavigate,
-    useLocation,
-    Navigate,
-    Outlete
-} from "react-router-dom";
-import {NavLink} from "react-router-dom";
-import {fakeAuthProvider} from "./auth"
+import {BrowserRouter as Router, NavLink, Route, Routes} from "react-router-dom";
 import './App.css';
-import Home from "./components/Home"
-import Login, {disableLinks} from "./components/Login";
-import Register from "./components/Register"
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, logOut} from "./firebase";
 
+export default function App() {
 
-function App() {
-    let showLinks = "showLinks";
-    console.log(disableLinks)
+     const [user, loading, error] = useAuthState(auth);
 
     return (
         <div className="root_container">
             <Router>
                 <div className="navBar">
                     <ul>
-                        <li><NavLink exact to="/home">Home</NavLink></li>
-                        <li className={showLinks}><NavLink exact to="/login">Login</NavLink></li>
-                        <li className={showLinks}><NavLink exact to="/register">Register</NavLink></li>
-                        <li className="dashboardLink"><NavLink exact to="dashboard">Dashboard</NavLink></li>
+                        <li><NavLink to="/home">Home</NavLink></li>
+                        {!user && <li><NavLink to='/login'>Login</NavLink></li>}
+                        {!user && <li><NavLink to="/register">Register</NavLink></li>}
+                        {user && <li><NavLink to="dashboard">Dashboard</NavLink></li>}
                     </ul>
                     <Routes>
                         <Route exact path="/home" element={<Home/>}></Route>
-                        <Route exact path="/login" element={<Login/>}></Route>
-                        <Route exact path="/register" element={<Register/>}></Route>
-                        <Route exact path="/dashboard" element={<Dashboard/>}></Route>
+                        <Route path="/login" element={<Login/>}></Route>
+                        <Route path="/register" element={<Register/>}></Route>
+                        <Route path="/dashboard" element={<Dashboard/>}></Route>
                     </Routes>
                 </div>
             </Router>
+            <div className="logout_container">
+                Logged in as: {user?.email}
+                <button className="logout_btn" onClick={logOut}>
+                    Logout
+                </button>
+            </div>
         </div>
+
     );
-
-    console.log(disableLinks)
-
 }
-
-export default App;

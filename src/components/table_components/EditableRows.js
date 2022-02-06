@@ -2,8 +2,9 @@ import React from "react";
 
 export const EditableRows = ({editFormData, handleEditFormChange, handleCancelClick}) => {
     return (
-        <div>
             <tr>
+                <td>
+                </td>
                 <td>
                     <input type="text"
                            required="required"
@@ -48,6 +49,6 @@ export const EditableRows = ({editFormData, handleEditFormChange, handleCancelCl
                     <button type="button" onClick={handleCancelClick}>Cancel</button>
                 </td>
             </tr>
-        </div>
+
     )
 }

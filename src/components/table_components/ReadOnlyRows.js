@@ -6,8 +6,8 @@ export const ReadOnlyRows = ({item, handleEditClick, handleDeleteClick}) => {
             <td>{item.id}</td>
             <td>{item.brand}</td>
             <td>{item.category}</td>
-            <td>{item.cost}</td>
             <td>{item.date}</td>
+            <td>{item.cost}</td>
             <td>{item.notes}</td>
             <td>
                 <button type="button" onClick={(event) => handleEditClick(event, item)}>

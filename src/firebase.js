@@ -1,14 +1,14 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import {getFirestore, collection, query, where, getDocs} from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {doc,addDoc, setDoc, collection, getFirestore} from "firebase/firestore";
+import {initializeApp} from "firebase/app";
+import "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+// TODO: Add SDKs for Firebase products that you want to use
+//https://firebase.google.com/docs/web/setup#available-libraries
+
 const firebaseConfig = {
     apiKey: "AIzaSyATNuEh4aiAWSbIcxIMqKgUm6ncC8mstQo",
     authDomain: "car-service-management-a95d4.firebaseapp.com",
@@ -19,16 +19,16 @@ const firebaseConfig = {
     measurementId: "G-YXP69GT4B9"
 };
 
-// Initialize Firebase
-const app = firebase.default.initializeApp(firebaseConfig);
 
-const firebaseApp = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
+
 
 const auth = app.auth();
-//const auth = getAuth(firebaseApp);
-// const db = app.firestore();
-const db = getFirestore(firebaseApp);
+
 const googleProvider = new firebase.default.auth.GoogleAuthProvider();
+
+
+const db = getFirestore();
 
 export default app;
 const signInWithGoogle = async () => {
@@ -36,10 +36,10 @@ const signInWithGoogle = async () => {
         const res = await auth.signInWithPopup(googleProvider);
         const user = res.user;
         const query = await db
-        .collection("users")
+            .collection("users")
             .where("uid", "==", user.uid)
             .get();
-        if(query.docs.length === 0) {
+        if (query.docs.length === 0) {
             await db.collection("users").add({
                 uid: user.uid,
                 name: user.displayName,
@@ -49,7 +49,7 @@ const signInWithGoogle = async () => {
         }
     } catch (err) {
         console.log(err);
-        alert(err.message);
+        //alert(err.message);
     }
 };
 
@@ -58,7 +58,7 @@ const signInWithEmailAndPassword = async (email, password) => {
         await auth.signInWithEmailAndPassword(email, password);
     } catch (err) {
         console.log(err);
-        alert(err.message);
+        //alert(err.message);
     }
 };
 
@@ -68,13 +68,13 @@ const registerWithEmailAndPassword = async (name, email, password) => {
         const user = res.user;
         await db.collection("users").add({
             uid: user.uid,
-            name,
+            name: user.displayName,
             authProvider: "local",
-            email,
+            email: user.email,
         });
     } catch (err) {
         console.log(err);
-        alert(err.message);
+        //alert(err.message);
     }
 };
 
@@ -84,13 +84,30 @@ const sendPasswordResetEmail = async (email) => {
         alert("Password reset link sent!");
     } catch (err) {
         console.log(err);
-        alert(err.message);
+        //alert(err.message);
     }
 };
 
 const logOut = () => {
     auth.signOut();
 };
+class TutorialDateService{
+    getAll(){
+        return db;
+    }
+    create(items){
+        return db.collection("users").add({
+            items
+        })
+    }
+    update(id, value){
+        return db.doc(id).update(value)
+    }
+    delete(id){
+        return db.doc(id).delete();
+    }
+}
+export  { app, TutorialDateService};
 
 export {
     auth,
@@ -99,5 +116,5 @@ export {
     signInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordResetEmail,
-    logOut
+    logOut,
 };

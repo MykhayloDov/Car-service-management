@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {auth, signInWithEmailAndPassword, signInWithGoogle} from "../firebase";
 import {useAuthState} from "react-firebase-hooks/auth";
 import "./login.css"
 
-let disableLinks = function () {};
 
- export default function Login() {
+
+export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, loading, error] = useAuthState(auth);
-    const navigate = useNavigate();
-    let linksDisplay = "showLinks";
+     const [user, loading, error] = useAuthState(auth);
+     const navigate = useNavigate();
 
     useEffect(() => {
         if (loading) {
@@ -19,14 +18,11 @@ let disableLinks = function () {};
         }
         if (user) {
             return navigate("/dashboard")
+
+
         }
     }, [user, loading]);
 
-    disableLinks = () => {
-        if (user) {
-            return linksDisplay = !linksDisplay;
-        }
-    }
 
     return (
         <div className="login">
@@ -66,7 +62,4 @@ let disableLinks = function () {};
             </div>
         </div>
     )
-     console.log(disableLinks())
 }
-
-export  {Login, disableLinks}

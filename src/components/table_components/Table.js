@@ -2,26 +2,36 @@ import React, {Fragment, useState} from "react";
 import {nanoid} from "nanoid";
 import {ReadOnlyRows} from "./ReadOnlyRows";
 import {EditableRows} from "./EditableRows";
+import {writeData} from "../Dashboard";
 import "./Table.css"
 
+const userData = {
+    brand: "",
+    category: "",
+    date: null,
+    cost: null,
+    notes: ""
+};
+
 export default function Table(props) {
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState([]);
     const [addFormData, setAddFormData] = useState(
         {
             brand: "",
             category: "",
-            cost: null,
             date: "",
+            cost: null,
             notes: "",
         }
     )
+
 
     const [editItemId, setEditItemId] = useState(null);
     const [editFormData, setEditFormData] = useState({
         brand: "",
         category: "",
-        cost: null,
         date: "",
+        cost: null,
         notes: "",
     })
 
@@ -60,7 +70,13 @@ export default function Table(props) {
         }
         const newItems = [...items, newItem];
         setItems(newItems);
+        userData.brand = addFormData.brand;
+        userData.category = addFormData.category;
+        userData.date = addFormData.date;
+        userData.cost = addFormData.cost;
+        userData.notes = addFormData.notes;
     }
+
 
     const handleEditFormSubmit = (event) => {
         event.preventDefault();
@@ -83,9 +99,9 @@ export default function Table(props) {
 
     const handleEditClick = (event, item) => {
         event.preventDefault();
-
         setEditItemId(item.id);
         const formValues = {
+
             brand: item.brand,
             category: item.category,
             date: item.date,
@@ -145,17 +161,19 @@ export default function Table(props) {
             <h2>Add item</h2>
             <form onSubmit={handleAddFormSubmit}>
                 <input type="text" name="brand" required="required" placeholder="type the brand"
-                       onChange={handleAddFormChange}/>
+                       onChange={handleAddFormChange} ref={props.brand}/>
                 <input type="text" name="category" required="required" placeholder="type the category"
-                       onChange={handleAddFormChange}/>
+                       onChange={handleAddFormChange} ref={props.category}/>
                 <input type="date" name="date" required="required" placeholder="select the date"
-                       onChange={handleAddFormChange}/>
+                       onChange={handleAddFormChange} ref={props.date}/>
                 <input type="number" name="cost" required="required" placeholder="enter the price"
-                       onChange={handleAddFormChange}/>
-                <input type="text" name="notes" placeholder="here you may leave some notes"
-                       onChange={handleAddFormChange}/>
-                <button className="addBtn" type="submit">Add</button>
+                       onChange={handleAddFormChange} ref={props.cost}/>
+                <input type="text" name="notes" placeholder="leave some notes"
+                       onChange={handleAddFormChange} ref={props.notes}/>
+                <button className="addBtn" type="submit " onClick={writeData}>Add</button>
             </form>
         </div>
     )
 }
+
+export {userData};
