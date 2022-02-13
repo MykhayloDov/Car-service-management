@@ -8,9 +8,11 @@ import Dashboard from "./components/Dashboard";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, logOut} from "./firebase";
 
-export default function App() {
 
-     const [user, loading, error] = useAuthState(auth);
+
+export default function App() {
+     const [user, loading] = useAuthState(auth);
+
 
     return (
         <div className="root_container">
@@ -40,3 +42,5 @@ export default function App() {
 
     );
 }
+
+

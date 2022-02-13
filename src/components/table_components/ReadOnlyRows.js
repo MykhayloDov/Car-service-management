@@ -1,4 +1,5 @@
 import React from "react";
+import {nanoid} from "nanoid";
 
 export const ReadOnlyRows = ({item, handleEditClick, handleDeleteClick}) => {
     return (

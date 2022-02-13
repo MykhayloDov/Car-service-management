@@ -3,9 +3,14 @@ import {nanoid} from "nanoid";
 import {ReadOnlyRows} from "./ReadOnlyRows";
 import {EditableRows} from "./EditableRows";
 import {writeData} from "../Dashboard";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, db} from "../../firebase";
+import {doc, getDocs, deleteDoc, collection} from "firebase/firestore";
 import "./Table.css"
 
+
 const userData = {
+    userEmail: null,
     brand: "",
     category: "",
     date: null,
@@ -13,7 +18,15 @@ const userData = {
     notes: ""
 };
 
-export default function Table(props) {
+export default function Table() {
+    const [user] = useAuthState(auth);
+    //console.log(user.email)
+     function getEmail() {
+        const userEmail = user.email;
+        console.log(user.email);
+        return userEmail;
+    }
+
     const [items, setItems] = useState([]);
     const [addFormData, setAddFormData] = useState(
         {
@@ -58,24 +71,30 @@ export default function Table(props) {
         setEditFormData(newFormData);
     }
 
-    const handleAddFormSubmit = (event) => {
+
+
+    const handleAddFormSubmit = async (event) => {
         event.preventDefault();
-        const newItem = {
-            id: nanoid(),
-            brand: addFormData.brand,
-            category: addFormData.category,
-            date: addFormData.date,
-            cost: addFormData.cost,
-            notes: addFormData.notes,
-        }
-        const newItems = [...items, newItem];
-        setItems(newItems);
+        getEmail();
+        userData.userEmail = user.email;
         userData.brand = addFormData.brand;
         userData.category = addFormData.category;
         userData.date = addFormData.date;
         userData.cost = addFormData.cost;
         userData.notes = addFormData.notes;
+        await writeData();
+        const newItem = {
+            id: nanoid(5),
+            brand: addFormData.brand,
+            category: addFormData.category,
+            date: addFormData.date,
+            cost: addFormData.cost,
+            notes: addFormData.notes,
+        };
+        const newItems = [...items, newItem];
+        setItems(newItems);
     }
+
 
 
     const handleEditFormSubmit = (event) => {
@@ -115,12 +134,19 @@ export default function Table(props) {
         setEditItemId(null)
     }
 
-    const handleDeleteClick = (itemId) => {
+    const handleDeleteClick = async (itemId) => {
         const newItems = [...items];
         const index = items.findIndex((item) => item.id === itemId);
         newItems.splice(index, 1);
         setItems(newItems);
+
+        const deleteDoc = async (itemId) => {
+            const noteRef = doc(db, "Car_service_database/nadiadovhan290@gmail.com/Parts", itemId.id);
+            await deleteDoc(noteRef);
+        }
+        await deleteDoc();
     }
+
 
     return (
         <div className="table">
@@ -139,7 +165,7 @@ export default function Table(props) {
                     </thead>
                     <tbody>
                     {items.map((item) => (
-                        <Fragment>
+                        <Fragment key={item.id}>
                             {
                                 editItemId === item.id ?
                                     (<EditableRows
@@ -161,16 +187,16 @@ export default function Table(props) {
             <h2>Add item</h2>
             <form onSubmit={handleAddFormSubmit}>
                 <input type="text" name="brand" required="required" placeholder="type the brand"
-                       onChange={handleAddFormChange} ref={props.brand}/>
+                       onChange={handleAddFormChange}/>
                 <input type="text" name="category" required="required" placeholder="type the category"
-                       onChange={handleAddFormChange} ref={props.category}/>
+                       onChange={handleAddFormChange}/>
                 <input type="date" name="date" required="required" placeholder="select the date"
-                       onChange={handleAddFormChange} ref={props.date}/>
+                       onChange={handleAddFormChange}/>
                 <input type="number" name="cost" required="required" placeholder="enter the price"
-                       onChange={handleAddFormChange} ref={props.cost}/>
+                       onChange={handleAddFormChange}/>
                 <input type="text" name="notes" placeholder="leave some notes"
-                       onChange={handleAddFormChange} ref={props.notes}/>
-                <button className="addBtn" type="submit " onClick={writeData}>Add</button>
+                       onChange={handleAddFormChange}/>
+                <button className="addBtn" type="submit">Add</button>
             </form>
         </div>
     )

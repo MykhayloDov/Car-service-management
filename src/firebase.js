@@ -91,23 +91,23 @@ const sendPasswordResetEmail = async (email) => {
 const logOut = () => {
     auth.signOut();
 };
-class TutorialDateService{
-    getAll(){
-        return db;
-    }
-    create(items){
-        return db.collection("users").add({
-            items
-        })
-    }
-    update(id, value){
-        return db.doc(id).update(value)
-    }
-    delete(id){
-        return db.doc(id).delete();
-    }
-}
-export  { app, TutorialDateService};
+// class TutorialDateService{
+//     getAll(){
+//         return db;
+//     }
+//     create(items){
+//         return db.collection("users").add({
+//             items
+//         })
+//     }
+//     update(id, value){
+//         return db.doc(id).update(value)
+//     }
+//     delete(id){
+//         return db.doc(id).delete();
+//     }
+// }
+// export  { app, TutorialDateService};
 
 export {
     auth,
